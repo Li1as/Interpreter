@@ -1,0 +1,6 @@
+{
+    int a = 770;
+    int b = -179;
+    int c = 848;
+    int r = (a + b) * c;
+}

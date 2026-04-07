@@ -1,0 +1,4 @@
+{
+    int i = 298;
+    char c = (char) i;
+}

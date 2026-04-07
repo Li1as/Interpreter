@@ -1,0 +1,5 @@
+{
+    string s1 = "o0B`ca']R7";
+    string s2 = "D~]Tapj6";
+    string s3 = s1 + s2;
+}

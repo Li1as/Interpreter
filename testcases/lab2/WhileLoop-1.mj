@@ -1,0 +1,16 @@
+{
+    boolean v4 = true;
+    char v3 = 'J';
+    int v2 = 41;
+    char v1 = 'B';
+    int v0 = 35;
+    while ((v0 < 4)) {
+        v1 = 'r';
+        v0++;
+    }
+    v2 /= -820;
+    v3 = 'Y';
+    v4 = (v3 != v2);
+    v2 = (v2 & 43);
+    --v2;
+}

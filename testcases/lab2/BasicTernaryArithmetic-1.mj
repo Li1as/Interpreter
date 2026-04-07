@@ -1,0 +1,5 @@
+{
+    int a = 379;
+    int b = 338;
+    int c = a > b ? a : b;
+}

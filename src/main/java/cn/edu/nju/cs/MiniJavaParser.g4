@@ -35,7 +35,49 @@ options {
     tokenVocab = MiniJavaLexer;
 }
 
-compilationUnit : expression EOF;
+compilationUnit : block EOF;
+
+block
+    : '{' blockStatement* '}'
+    ;
+
+blockStatement
+    : localVariableDeclaration ';'
+    | statement
+    ;
+
+localVariableDeclaration
+    : primitiveType identifier '=' expression
+    | primitiveType identifier
+    ;
+
+statement
+    : block
+    | IF parExpression statement (ELSE statement)?
+    | FOR '(' forControl ')' statement
+    | WHILE parExpression statement
+    | BREAK ';'
+    | CONTINUE ';'
+    | SEMI
+    | expression ';'
+    ;
+
+parExpression
+    : '(' expression ')'
+    ;
+
+forControl
+    : forInit? ';' expression? ';' forUpdate = expressionList?
+    ;
+
+forInit
+    : localVariableDeclaration
+    | expressionList
+    ;
+
+expressionList
+    : expression (',' expression)*
+    ;
 
 expression
     : primary
@@ -58,13 +100,34 @@ expression
     ) expression
     ;
 
-primary : '(' expression ')' | literal ;
+primary : '(' expression ')' | literal | identifier ;
 
 literal
     : DECIMAL_LITERAL
     | CHAR_LITERAL
     | STRING_LITERAL
     | BOOL_LITERAL
+    | NULL_LITERAL
+    ;
+
+identifier
+    : IDENTIFIER
+    | MODULE
+    | OPEN
+    | REQUIRES
+    | EXPORTS
+    | OPENS
+    | TO
+    | USES
+    | PROVIDES
+    | WITH
+    | TRANSITIVE
+    | YIELD
+    | SEALED
+    | PERMITS
+    | RECORD
+    | VAR
+    | ASSERT
     ;
 
 primitiveType
@@ -73,4 +136,3 @@ primitiveType
     | INT
     | STRING
     ;
-    

@@ -1,0 +1,5 @@
+{
+    int i = 86;
+    boolean b = true;
+    boolean r = b or (++i == 999);
+}

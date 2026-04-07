@@ -1,0 +1,5 @@
+{
+    boolean a = false;
+    boolean b = false;
+    boolean c = a and b;
+}

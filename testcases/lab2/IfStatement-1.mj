@@ -1,0 +1,31 @@
+{
+    char v10 = '~';
+    boolean v9 = false;
+    int v8 = -27;
+    boolean v7 = true;
+    char v6 = '`';
+    int v5 = 37;
+    char v3 = '<';
+    char v0 = 'S';
+    if ((-8 == 10)) {
+        int v2 = -46;
+        boolean v1 = false;
+        v0 <<= 'L';
+        v1 = (6 > 3);
+        v2 |= -49;
+    } else {
+        boolean v4 = true;
+        v3 &= '|';
+        v4 = (-1 >= -6);
+        if (true) ;
+    }
+    v5 = 4;
+    if ((-2 != -1)) {
+        v6 = 'u';
+        v7 = false;
+    }
+    v8 = -13;
+    v9 = true;
+    v10 <<= (char) 22;
+    v10 = (v10 + 32) % 128;
+}
