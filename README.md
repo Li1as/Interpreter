@@ -1,7 +1,7 @@
 # lab of NJUCS Course Interpreter 2026 Spring
-finished lab1 100/100
-finished lab2 100/100
-waiting for lab3...
+- finished lab1 100/100
+- finished lab2 100/100
+- waiting for lab3...
 
 you can view the code for each lab by switching branches.
 
