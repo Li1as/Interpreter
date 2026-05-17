@@ -6,34 +6,55 @@ import java.util.Objects;
 
 public class Value {
     public enum Base {
-        INT, CHAR, BOOL, STRING, VOID, NULL
+        INT, CHAR, BOOL, STRING, VOID, NULL, CLASS
     }
 
     public static final class TypeInfo {
         public final Base base;
+        public final String className;
         public final int dimensions;
 
-        private TypeInfo(Base base, int dimensions) {
+        private TypeInfo(Base base, String className, int dimensions) {
             this.base = base;
+            this.className = className;
             this.dimensions = dimensions;
         }
 
         public static TypeInfo primitive(Base base) {
-            return new TypeInfo(base, 0);
+            if (base == Base.CLASS) fail(34);
+            return new TypeInfo(base, null, 0);
+        }
+
+        public static TypeInfo classType(String className) {
+            return new TypeInfo(Base.CLASS, className, 0);
         }
 
         public static TypeInfo array(Base base, int dimensions) {
             if (dimensions <= 0) fail(34);
-            return new TypeInfo(base, dimensions);
+            if (base == Base.CLASS) fail(34);
+            return new TypeInfo(base, null, dimensions);
+        }
+
+        public static TypeInfo arrayOf(TypeInfo elementBase, int dimensions) {
+            if (dimensions <= 0 || elementBase.dimensions != 0) fail(34);
+            return new TypeInfo(elementBase.base, elementBase.className, dimensions);
         }
 
         public TypeInfo elementType() {
             if (!isArray()) fail(34);
-            return dimensions == 1 ? primitive(base) : array(base, dimensions - 1);
+            return dimensions == 1 ? new TypeInfo(base, className, 0) : new TypeInfo(base, className, dimensions - 1);
         }
 
         public boolean isArray() {
             return dimensions > 0;
+        }
+
+        public boolean isClass() {
+            return dimensions == 0 && base == Base.CLASS;
+        }
+
+        public boolean isReference() {
+            return isArray() || isClass();
         }
 
         public boolean isIntegral() {
@@ -43,12 +64,12 @@ public class Value {
         @Override
         public boolean equals(Object o) {
             if (!(o instanceof TypeInfo other)) return false;
-            return base == other.base && dimensions == other.dimensions;
+            return base == other.base && dimensions == other.dimensions && Objects.equals(className, other.className);
         }
 
         @Override
         public int hashCode() {
-            return Objects.hash(base, dimensions);
+            return Objects.hash(base, className, dimensions);
         }
 
         @Override
@@ -60,6 +81,7 @@ public class Value {
                 case STRING -> "string";
                 case VOID -> "void";
                 case NULL -> "null";
+                case CLASS -> className;
             };
             return name + "[]".repeat(dimensions);
         }
@@ -73,6 +95,15 @@ public class Value {
             if (!type.isArray()) fail(34);
             this.type = type;
             this.elements = new ArrayList<>(elements);
+        }
+    }
+
+    public static final class ObjectValue {
+        public final String runtimeClass;
+        public final java.util.LinkedHashMap<String, Value> fields = new java.util.LinkedHashMap<>();
+
+        public ObjectValue(String runtimeClass) {
+            this.runtimeClass = runtimeClass;
         }
     }
 
@@ -133,19 +164,28 @@ public class Value {
     }
 
     public static Value nullValue(TypeInfo type) {
-        if (!type.isArray()) fail(34);
+        if (!type.isReference()) fail(34);
         return new Value(type, null);
+    }
+
+    public static Value objectValue(TypeInfo type, ObjectValue object) {
+        if (!type.isClass()) fail(34);
+        return new Value(type, object);
     }
 
     public static final Value VOID = new Value(VOID_TYPE, null);
     public static final Value NULL = new Value(NULL_TYPE, null);
 
     public boolean isNull() {
-        return value == null && (type.base == Base.NULL || type.isArray());
+        return value == null && (type.base == Base.NULL || type.isReference());
     }
 
     public boolean isArray() {
         return type.isArray();
+    }
+
+    public boolean isObject() {
+        return type.isClass() && value != null;
     }
 
     public int asInt() {
@@ -162,13 +202,13 @@ public class Value {
     }
 
     public String asString() {
+        if (type.equals(VOID_TYPE)) fail(34);
         if (type.equals(STRING)) return (String) value;
         if (type.equals(CHAR)) return String.valueOf((char) (asInt() & 0xFF));
         if (type.equals(INT)) return String.valueOf(asInt());
         if (type.equals(BOOL)) return String.valueOf(asBool());
         if (isNull()) return "null";
         if (isArray()) return arrayToString(array());
-        fail(34);
         return "";
     }
 
@@ -177,10 +217,16 @@ public class Value {
         return (ArrayValue) value;
     }
 
+    public ObjectValue object() {
+        if (!type.isClass() || isNull()) fail(34);
+        return (ObjectValue) value;
+    }
+
     public static String printable(Value value) {
         if (value.type.equals(VOID_TYPE)) fail(34);
         if (value.isNull()) return "null";
         if (value.isArray()) return arrayToString(value.array());
+        if (value.isObject()) return value.object().runtimeClass;
         return value.asString();
     }
 

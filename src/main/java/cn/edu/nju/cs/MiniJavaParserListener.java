@@ -18,6 +18,66 @@ public interface MiniJavaParserListener extends ParseTreeListener {
 	 */
 	void exitCompilationUnit(MiniJavaParser.CompilationUnitContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link MiniJavaParser#classDeclaration}.
+	 * @param ctx the parse tree
+	 */
+	void enterClassDeclaration(MiniJavaParser.ClassDeclarationContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link MiniJavaParser#classDeclaration}.
+	 * @param ctx the parse tree
+	 */
+	void exitClassDeclaration(MiniJavaParser.ClassDeclarationContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link MiniJavaParser#parentClassDeclaration}.
+	 * @param ctx the parse tree
+	 */
+	void enterParentClassDeclaration(MiniJavaParser.ParentClassDeclarationContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link MiniJavaParser#parentClassDeclaration}.
+	 * @param ctx the parse tree
+	 */
+	void exitParentClassDeclaration(MiniJavaParser.ParentClassDeclarationContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link MiniJavaParser#classBody}.
+	 * @param ctx the parse tree
+	 */
+	void enterClassBody(MiniJavaParser.ClassBodyContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link MiniJavaParser#classBody}.
+	 * @param ctx the parse tree
+	 */
+	void exitClassBody(MiniJavaParser.ClassBodyContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link MiniJavaParser#classBodyDeclaration}.
+	 * @param ctx the parse tree
+	 */
+	void enterClassBodyDeclaration(MiniJavaParser.ClassBodyDeclarationContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link MiniJavaParser#classBodyDeclaration}.
+	 * @param ctx the parse tree
+	 */
+	void exitClassBodyDeclaration(MiniJavaParser.ClassBodyDeclarationContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link MiniJavaParser#fieldDeclaration}.
+	 * @param ctx the parse tree
+	 */
+	void enterFieldDeclaration(MiniJavaParser.FieldDeclarationContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link MiniJavaParser#fieldDeclaration}.
+	 * @param ctx the parse tree
+	 */
+	void exitFieldDeclaration(MiniJavaParser.FieldDeclarationContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link MiniJavaParser#constructorDeclaration}.
+	 * @param ctx the parse tree
+	 */
+	void enterConstructorDeclaration(MiniJavaParser.ConstructorDeclarationContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link MiniJavaParser#constructorDeclaration}.
+	 * @param ctx the parse tree
+	 */
+	void exitConstructorDeclaration(MiniJavaParser.ConstructorDeclarationContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link MiniJavaParser#methodDeclaration}.
 	 * @param ctx the parse tree
 	 */
@@ -237,6 +297,16 @@ public interface MiniJavaParserListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitCreatedName(MiniJavaParser.CreatedNameContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link MiniJavaParser#classCreatorRest}.
+	 * @param ctx the parse tree
+	 */
+	void enterClassCreatorRest(MiniJavaParser.ClassCreatorRestContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link MiniJavaParser#classCreatorRest}.
+	 * @param ctx the parse tree
+	 */
+	void exitClassCreatorRest(MiniJavaParser.ClassCreatorRestContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link MiniJavaParser#arrayCreatorRest}.
 	 * @param ctx the parse tree
