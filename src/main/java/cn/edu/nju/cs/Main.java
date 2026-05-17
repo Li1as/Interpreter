@@ -14,7 +14,7 @@ public class Main {
         lexer.addErrorListener(new org.antlr.v4.runtime.BaseErrorListener() {
             @Override
             public void syntaxError(org.antlr.v4.runtime.Recognizer<?, ?> recognizer, Object offendingSymbol, int line, int charPositionInLine, String msg, org.antlr.v4.runtime.RecognitionException e) {
-                System.err.println("Process exits with 34.");
+                System.out.println("Process exits with 34.");
                 System.exit(34);
             }
         });
@@ -25,18 +25,11 @@ public class Main {
         try {
             ParseTree pt = parser.compilationUnit();
             Interpreter interpreter = new Interpreter();
-            Value result = interpreter.visit(pt);
-            switch (result.type) {
-                case INT -> System.out.println(result.value);
-                case BOOL -> System.out.println(result.value);
-                case STRING -> System.out.println(result.value);
-                case CHAR -> System.out.println((char) (result.asInt() & 0xFF));
-            }
+            interpreter.visit(pt);
         } catch (Exception e) {
-            System.err.println("Process exits with 34.");
+            System.out.println("Process exits with 34.");
             System.exit(34);
         }
-        // new MiniJavaParserBaseVisitor<>().visit(pt);
     }
 
 
@@ -49,4 +42,5 @@ public class Main {
         File mjFile = new File(args[0]);
         run(mjFile);
     }
+    
 }
