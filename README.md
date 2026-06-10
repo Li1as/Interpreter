@@ -2,7 +2,7 @@
 - finished lab1 100/100
 - finished lab2 100/100
 - finished lab3 100/100
-- finished lab4 99/100 (testcases: 493/494) with codex's help(已开摆)
+- finished lab4 100/100 with codex's help(测试点修正后已满分)
 
 you can view the code for each lab by switching branches.
 
